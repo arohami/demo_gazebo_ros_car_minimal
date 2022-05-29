@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+    <model name='car_wheel'>
+        <link name='link'>
+            <inertial>
+                <mass>1.0</mass>
+                <inertia>
+                    <ixx>0.0045</ixx>
+                    <iyy>0.005</iyy>
+                    <izz>0.0045</izz>
+                </inertia>
+                <pose>0 0 0 0 -0 0</pose>
+            </inertial>
+            <self_collide>0</self_collide>
+            <enable_wind>0</enable_wind>
+            <kinematic>0</kinematic>
+            <pose>0 0 0 1.5729 -0 0</pose>
+            <gravity>1</gravity>
+            <visual name='visual'>
+                <material>
+                    <diffuse> 0.3 0.3 0.3 1 </diffuse>
+                    <specular> 0 0.2 0.2 1  </specular>
+                    <emissive> 0 0 0 1 </emissive>
+                    <ambient> 0.1 0.1 0.1 1 </ambient>
+                </material>
+                <geometry>
+                    <cylinder>
+                        <radius>0.25</radius>
+                        <length>0.1</length>
+                    </cylinder>
+                </geometry>
+                <pose>0 0 0 0 -0 0</pose>
+                <transparency>0</transparency>
+                <cast_shadows>1</cast_shadows>
+            </visual>
+            <collision name='collision'>
+                <pose>0 0 0 0 -0 0</pose>
+                <geometry>
+                    <cylinder>
+                        <radius>0.25</radius>
+                        <length>0.1</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+        </link>
+        <static>0</static>
+    </model>
+</sdf>

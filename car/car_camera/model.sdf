@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+    <model name="car_camera">
+        <pose>0 0 0.5 0 0 3.14</pose>
+        <static>true</static>
+        <link name="link">
+            <inertial>
+                <mass>0.1</mass>
+                <inertia>
+                    <ixx>0.000166667</ixx>
+                    <iyy>0.000166667</iyy>
+                    <izz>0.000166667</izz>
+                </inertia>
+            </inertial>
+            <collision name="collision">
+                <geometry>
+                    <box>
+                        <size>0.1 0.1 0.1</size>
+                    </box>
+                </geometry>
+            </collision>
+            <visual name="visual">
+                <material>
+                    <diffuse> 0.52 0.8 0.98 1 </diffuse>
+                    <specular> 0.2 0.2 0.2 0  </specular>
+                    <emissive> 0 0 0 1 </emissive>
+                    <ambient> 0.114 0.16 0.196 1 </ambient>
+                </material>
+                <geometry>
+                    <box>
+                        <size>0.1 0.1 0.1</size>
+                    </box>
+                </geometry>
+            </visual>
+            <sensor type="camera" name="car_camera">
+                <update_rate>24</update_rate>
+                <visualize>true</visualize>
+                <camera name="head">
+                    <horizontal_fov>1.3962634</horizontal_fov>
+                    <image>
+                        <width>640</width>
+                        <height>480</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                </camera>
+                <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                    <ros>
+                        <!-- <namespace>camera</namespace> -->
+                        <argument>--ros-args --remap image_raw:=image_raw</argument>
+                        <argument>--ros-args --remap camera_info:=camera_info</argument>
+                    </ros>
+                </plugin>
+            </sensor>
+        </link>
+    </model>
+</sdf>

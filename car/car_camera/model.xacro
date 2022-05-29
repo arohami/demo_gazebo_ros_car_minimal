@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="car_camera">
+    <xacro:property name="camera_length" value="0.1"/>
+    <xacro:property name="car_camera_geometry">
+        <geometry>
+            <box size="${camera_length} ${camera_length} ${camera_length}"/>
+        </geometry>
+    </xacro:property>
+    <material name="camera_color">
+        <color rgba="0.52 0.8 0.98 1"/>
+    </material>
+
+    <gazebo reference="car_camera">
+        <material>
+            <diffuse> 0.52 0.8 0.98 1 </diffuse>
+            <specular> 0.2 0.2 0.2 0  </specular>
+            <emissive> 0 0 0 1 </emissive>
+            <ambient> 0.114 0.16 0.196 1 </ambient>
+        </material>
+    </gazebo>
+
+    <link name="car_camera">
+        <inertial>
+            <mass value="0.1"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.000166667" ixy="0" ixz="0" iyy="0.000166667" iyz="0" izz="0.000166667"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.14"/>
+            <xacro:insert_block name="car_camera_geometry"/>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.14"/>
+            <xacro:insert_block name="car_camera_geometry"/>
+            <material name="camera_color"/>
+        </visual>
+    </link>
+</robot>

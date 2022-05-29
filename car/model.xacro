@@ -1,0 +1,101 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2wheel_drive_car">
+
+    <!-- car body -->
+    <link name="car_body::link" />
+
+    <xacro:include filename="car_body/model.xacro"/>
+    <joint name="carbodylink_2_carbody" type="fixed">
+        <parent link="car_body::link"/>
+        <child link="car_body"/>
+    </joint>
+
+    <!-- car ball wheel, rear wheels -->
+    <xacro:include filename="car_ball_wheel/model.xacro"/>
+
+    <xacro:car_ball_wheel name="rear_left_ball_wheel"/>
+    <joint name="rear_left_ball_wheel_2_body" type="continuous">
+        <origin xyz="${-(car_body_length/2) + (car_body_length/5)} ${(car_body_width/2) - (car_body_width/5)} ${-(car_body_height/2)}" rpy="0.0 0.0 0.0"/>
+        <parent link="car_body"/>
+        <child link="rear_left_ball_wheel"/>
+        <axis xyz="0 1 0"/>
+        <dynamics friction="0.5"/>
+    </joint>
+
+    <xacro:car_ball_wheel name="rear_right_ball_wheel"/>
+    <joint name="rear_right_ball_wheel_2_body" type="continuous">
+        <origin xyz="${-(car_body_length/2) + (car_body_length/5)} ${-(car_body_width/2) + (car_body_width/5)} ${-(car_body_height/2)}" 
+        rpy="0.0 0.0 0.0"/>
+        <parent link="car_body"/>
+        <child link="rear_right_ball_wheel"/>
+        <axis xyz="0 1 0"/>
+        <dynamics friction="0.5"/>
+    </joint>
+
+    <!-- base footprint location -->
+    <link name="base_footprint"/>
+    <joint name="base_link" type="fixed">
+        <parent link="car_body"/>
+        <child link="base_footprint"/>
+        <origin xyz="0 0 ${-(car_body_height/2) - car_ball_wheel_radius}" rpy="0 0 0"/>
+    </joint>    
+    
+    <!-- car regular front wheels -->
+    <xacro:include filename="car_wheel/model.xacro"/>
+
+    <xacro:car_wheel name="front_left_wheel"/>
+    <joint name="front_left_wheel_2_body" type="continuous">
+        <origin xyz="${+(car_body_length/2) - (car_body_length/5)} ${(car_body_width/2)} ${-(car_body_height/2) + (car_wheel_radius - car_ball_wheel_radius)}" rpy="${-pi/2} 0 0"/>
+        <parent link="car_body"/>
+        <child link="front_left_wheel"/>
+        <axis xyz="0 0 1"/>
+        <dynamics friction="0.5"/>
+    </joint>
+
+    <xacro:car_wheel name="front_right_wheel"/>
+    <joint name="front_right_wheel_2_body" type="continuous">
+        <origin xyz="${+(car_body_length/2) - (car_body_length/5)} ${-(car_body_width/2)} ${-(car_body_height/2) + (car_wheel_radius - car_ball_wheel_radius)}" rpy="${-pi/2} 0 0"/>
+        <parent link="car_body"/>
+        <child link="front_right_wheel"/>
+        <axis xyz="0 0 1"/>
+        <dynamics friction="0.5"/>
+    </joint>
+
+    <xacro:include filename="camera_ros/model.xacro"/>
+    <joint name="camera_2_body" type="fixed">
+        <origin xyz="${+(car_body_length/2) - (camera_length/2)} 0 ${car_body_height/2 + camera_length/2}" rpy="0 0 0"/>
+        <parent link="car_body"/>
+        <child link="camera_ros"/>
+    </joint>
+
+    <gazebo>
+        <plugin name="two_wheeled_robot_diff_drive" filename="libgazebo_ros_diff_drive.so">
+
+            <!-- Number of wheel pairs -->
+            <num_wheel_pairs>1</num_wheel_pairs>
+
+            <!-- wheels0 -->
+            <left_joint>front_left_wheel_2_body</left_joint>
+            <right_joint>front_right_wheel_2_body</right_joint>
+
+            <!-- kinematics -->
+            <wheel_separation>1</wheel_separation>
+            <wheel_diameter>0.5</wheel_diameter>
+
+            <!-- limits -->
+            <max_wheel_torque>20</max_wheel_torque>
+            <!-- <max_wheel_acceleration>5.0</max_wheel_acceleration> -->
+
+            <!-- output -->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <!-- <publish_wheel_tf>true</publish_wheel_tf> -->
+
+            <!-- <ros><argument>cmd_vel:=custom_cmd_vel</argument></ros> -->
+
+            <odometry_frame>start_loc_map</odometry_frame>
+            <robot_base_frame>car_body::link</robot_base_frame>
+        </plugin>
+    </gazebo>
+
+</robot>

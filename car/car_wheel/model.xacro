@@ -1,0 +1,40 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="car_car_ball_wheel">
+    <xacro:property name="car_wheel_radius" value="0.25" />
+    <xacro:property name="car_wheel_mass" value="0.5" />
+    <xacro:property name="car_wheel_width" value="0.1"/>
+    <xacro:property name="car_wheel_geometry">
+        <geometry>
+            <cylinder radius="${car_wheel_radius}" length="${car_wheel_width}"/>
+        </geometry>
+    </xacro:property>
+    <xacro:property name="car_wheel_mass"/>
+    <material name="car_wheel_color">
+        <color rgba="0.3 0.3 0.3 1"/>
+    </material>
+
+    <xacro:macro name="car_wheel" params="name">
+        <gazebo reference="${name}">
+            <material>
+                <diffuse> 0.3 0.3 0.3 1 </diffuse>
+                <specular> 0 0.2 0.2 1  </specular>
+                <emissive> 0 0 0 1 </emissive>
+                <ambient> 0.1 0.1 0.1 1 </ambient>
+            </material>
+        </gazebo>
+
+        <link name="${name}">
+            <inertial>
+                <mass value="${car_wheel_mass}"/>
+                <inertia ixx="${(1/12) * car_wheel_mass * (3 * car_wheel_radius * car_wheel_radius + car_wheel_width *car_wheel_width)}" ixy="0" ixz="0" iyy="${(1/12) * car_wheel_mass * (3 * car_wheel_radius * car_wheel_radius + car_wheel_width * car_wheel_width)}" iyz="0" izz="${(1/2) * car_wheel_mass * car_wheel_radius * car_wheel_radius}"/>
+            </inertial>
+            <collision>
+                <xacro:insert_block name="car_wheel_geometry"/>
+            </collision>
+            <visual>
+                <xacro:insert_block name="car_wheel_geometry"/>
+                <material name="car_wheel_color"/>
+            </visual>
+        </link>
+    </xacro:macro>
+</robot>
