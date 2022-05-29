@@ -41,6 +41,8 @@ however since gazebo doens't properly convert some tags from urdf to sdf, model 
 
 **note:** we can also write model description in sdf format and then convert it to urdf using pysdf: `ros2 run pysdf sdf2urdf model.sdf model.urdf`. but again, some tags like "joint" that are different in urdf and sdf should be modified manually after the conversion.
 
+**[my forked pysdf repo](https://github.com/arahami/pysdf)**
+
 
 ### ROS Visualization
 to visualize data of the robot we use rviz assuming position of the robot is always known. but other parts position should be calculated (tf)
