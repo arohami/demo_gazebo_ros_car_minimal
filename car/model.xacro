@@ -61,11 +61,11 @@
         <dynamics friction="0.5"/>
     </joint>
 
-    <xacro:include filename="camera_ros/model.xacro"/>
+    <xacro:include filename="car_camera/model.xacro"/>
     <joint name="camera_2_body" type="fixed">
         <origin xyz="${+(car_body_length/2) - (camera_length/2)} 0 ${car_body_height/2 + camera_length/2}" rpy="0 0 0"/>
         <parent link="car_body"/>
-        <child link="camera_ros"/>
+        <child link="car_camera"/>
     </joint>
 
     <gazebo>

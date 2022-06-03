@@ -1,46 +1,51 @@
-<?xml version='1.0'?>
+<?xml version="1.0" ?>
 <sdf version='1.7'>
     <model name='car_body'>
-        <link name='link'>
+        <link name='car_body'>
             <inertial>
+                <pose>0 0 0 0 -0 0</pose>
                 <mass>10</mass>
                 <inertia>
-                    <ixx>0.5</ixx>
-                    <iyy>1.0</iyy>
-                    <izz>0.1</izz>
+                    <ixx>0.520833</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>1.77083</iyy>
+                    <iyz>0</iyz>
+                    <izz>2.08333</izz>
                 </inertia>
-                <pose>0 0 0 0 -0 0</pose>
             </inertial>
-            <self_collide>0</self_collide>
-            <enable_wind>0</enable_wind>
-            <kinematic>0</kinematic>
-            <pose>0 0 0 0 -0 0</pose>
-            <gravity>1</gravity>
-            <visual name='visual'>
-                <material>
-                    <diffuse> 0.97 0.25 0.25 1 </diffuse>
-                    <specular> 0.2 0.2 0.2 1  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.35 0.15 0.15 1 </ambient>
-                </material>
+            <collision name='car_body_collision'>
+                <pose>0 0 0 0 -0 0</pose>
                 <geometry>
                     <box>
                         <size>2 1 0.5</size>
                     </box>
                 </geometry>
-                <pose>0 0 -0 0 -0 0</pose>
-                <transparency>0</transparency>
-                <cast_shadows>1</cast_shadows>
-            </visual>
-            <collision name='collision'>
-                <geometry>
-                    <box>
-                        <size>2 1 0.5</size>
-                    </box>
-                </geometry>
+                <surface>
+                    <contact>
+                        <ode/>
+                    </contact>
+                    <friction>
+                        <ode/>
+                    </friction>
+                </surface>
             </collision>
+            <visual name='car_body_visual'>
+                <pose>0 0 0 0 -0 0</pose>
+                <geometry>
+                    <box>
+                        <size>2 1 0.5</size>
+                    </box>
+                </geometry>
+                <gazebo reference="car_body">
+                    <material>
+                        <diffuse> 0.97 0.25 0.25 1 </diffuse>
+                        <specular> 0.2 0.2 0.2 1  </specular>
+                        <emissive> 0 0 0 1 </emissive>
+                        <ambient> 0.35 0.15 0.15 1 </ambient>
+                    </material>
+                </gazebo>
+            </visual>
         </link>
-        <static>0</static>
-
     </model>
 </sdf>

@@ -183,7 +183,7 @@
     <material name="camera_color">
         <color rgba="0.52 0.8 0.98 1"/>
     </material>
-    <gazebo reference="camera_ros">
+    <gazebo reference="car_camera">
         <material>
             <diffuse> 0.52 0.8 0.98 1 </diffuse>
             <specular> 0.2 0.2 0.2 0  </specular>
@@ -191,7 +191,7 @@
             <ambient> 0.114 0.16 0.196 1 </ambient>
         </material>
     </gazebo>
-    <link name="camera_ros">
+    <link name="car_camera">
         <inertial>
             <mass value="0.1"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -211,10 +211,35 @@
             <material name="camera_color"/>
         </visual>
     </link>
+    <gazebo reference="car_camera">
+        <sensor type="camera" name="car_camera">
+            <update_rate>24</update_rate>
+            <visualize>true</visualize>
+            <camera name="head">
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>480</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <ros>
+                    <!-- <namespace>camera</namespace> -->
+                    <argument>--ros-args --remap image_raw:=image_raw</argument>
+                    <argument>--ros-args --remap camera_info:=camera_info</argument>
+                </ros>
+            </plugin>
+        </sensor>
+    </gazebo>
     <joint name="camera_2_body" type="fixed">
         <origin rpy="0 0 0" xyz="0.95 0 0.3"/>
         <parent link="car_body"/>
-        <child link="camera_ros"/>
+        <child link="car_camera"/>
     </joint>
     <gazebo>
         <plugin filename="libgazebo_ros_diff_drive.so" name="two_wheeled_robot_diff_drive">

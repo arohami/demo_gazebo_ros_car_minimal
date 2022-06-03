@@ -14,7 +14,7 @@ this example includes seperated models for gazebo (sdf) and rviz (urdf) files so
 urdf files are written using xacro. then they are converted to urdf files using `ros2 xacro xacro model.xacro > model.urdf` command.
 
 ## SDF
-sdf files for each part are initially created using `gazebo sdf -p model.urdf > model.sdf`. since some parts of the files doesn't convert properly to sdf, further modification are needed:
+sdf files for each part are initially created using `gz sdf -p model.urdf > model.sdf`. since some parts of the files doesn't convert properly to sdf, further modification are needed:
 * \<material> tags in urdf (inside \<gazebo> tag) are the color specifications of the model for sdf. but they don't convert properly from urdf to sdf. so material elements are directly inserted in sdf model after conversion.
 * since urdf \<joint>s are different from the ones from sdf, "revolute" joints are used in urdf for the simplest representation of "ball" joints in the sdf. since this example is supposed to be as simple as possible, rear wheels of the car are considered to be spherical with ball joints.
 

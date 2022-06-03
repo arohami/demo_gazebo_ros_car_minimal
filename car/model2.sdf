@@ -54,10 +54,10 @@
                     </box>
                 </geometry>
                 <material>
-                    <diffuse> 0.97 0.25 0.25 1 </diffuse>
-                    <specular> 0.2 0.2 0.2 1  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.35 0.15 0.15 1 </ambient>
+                    <script>
+                        <name>diffuse</name>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                    </script>
                 </material>
             </visual>
             <visual name='car_body::link_fixed_joint_lump__car_camera_visual_1'>
@@ -68,10 +68,10 @@
                     </box>
                 </geometry>
                 <material>
-                    <diffuse> 0.52 0.8 0.98 1 </diffuse>
-                    <specular> 0.2 0.2 0.2 0  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.114 0.16 0.196 1 </ambient>
+                    <script>
+                        <name>diffuse</name>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                    </script>
                 </material>
             </visual>
             <sensor name='car_camera' type='camera'>
@@ -156,10 +156,10 @@
                     </cylinder>
                 </geometry>
                 <material>
-                    <diffuse> 0.3 0.3 0.3 1 </diffuse>
-                    <specular> 0 0.2 0.2 1  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.1 0.1 0.1 1 </ambient>
+                    <script>
+                        <name>diffuse</name>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                    </script>
                 </material>
             </visual>
         </link>
@@ -221,17 +221,30 @@
                     </cylinder>
                 </geometry>
                 <material>
-                    <diffuse> 0.3 0.3 0.3 1 </diffuse>
-                    <specular> 0 0.2 0.2 1  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.1 0.1 0.1 1 </ambient>
+                    <script>
+                        <name>diffuse</name>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                    </script>
                 </material>
             </visual>
         </link>
-        <joint name='rear_left_ball_wheel_2_body' type='ball'>
+        <joint name='rear_left_ball_wheel_2_body' type='revolute'>
             <pose relative_to='car_body::link'>-0.6 0.3 -0.25 0 -0 0</pose>
             <parent>car_body::link</parent>
             <child>rear_left_ball_wheel</child>
+            <axis>
+                <xyz>0 1 0</xyz>
+                <limit>
+                    <lower>-1e+16</lower>
+                    <upper>1e+16</upper>
+                </limit>
+                <dynamics>
+                    <damping>0</damping>
+                    <friction>0.5</friction>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
+            </axis>
         </joint>
         <link name='rear_left_ball_wheel'>
             <pose relative_to='rear_left_ball_wheel_2_body'>0 0 0 0 -0 0</pose>
@@ -271,17 +284,30 @@
                     </sphere>
                 </geometry>
                 <material>
-                    <diffuse> 0.3 0.3 0.3 1 </diffuse>
-                    <specular> 0 0.2 0.2 1  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.1 0.1 0.1 1 </ambient>
+                    <script>
+                        <name>diffuse</name>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                    </script>
                 </material>
             </visual>
         </link>
-        <joint name='rear_right_ball_wheel_2_body' type='ball'>
+        <joint name='rear_right_ball_wheel_2_body' type='revolute'>
             <pose relative_to='car_body::link'>-0.6 -0.3 -0.25 0 -0 0</pose>
             <parent>car_body::link</parent>
             <child>rear_right_ball_wheel</child>
+            <axis>
+                <xyz>0 1 0</xyz>
+                <limit>
+                    <lower>-1e+16</lower>
+                    <upper>1e+16</upper>
+                </limit>
+                <dynamics>
+                    <damping>0</damping>
+                    <friction>0.5</friction>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
+            </axis>
         </joint>
         <link name='rear_right_ball_wheel'>
             <pose relative_to='rear_right_ball_wheel_2_body'>0 0 0 0 -0 0</pose>
@@ -321,10 +347,10 @@
                     </sphere>
                 </geometry>
                 <material>
-                    <diffuse> 0.3 0.3 0.3 1 </diffuse>
-                    <specular> 0 0.2 0.2 1  </specular>
-                    <emissive> 0 0 0 1 </emissive>
-                    <ambient> 0.1 0.1 0.1 1 </ambient>
+                    <script>
+                        <name>diffuse</name>
+                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                    </script>
                 </material>
             </visual>
         </link>
