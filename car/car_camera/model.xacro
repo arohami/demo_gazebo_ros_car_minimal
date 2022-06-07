@@ -39,6 +39,7 @@
         <sensor type="camera" name="car_camera">
             <update_rate>24</update_rate>
             <visualize>true</visualize>
+            <topic>camera</topic>
             <camera name="head">
                 <horizontal_fov>1.3962634</horizontal_fov>
                 <image>
@@ -51,13 +52,31 @@
                     <far>300</far>
                 </clip>
             </camera>
-            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-                <ros>
-                    <!-- <namespace>camera</namespace> -->
-                    <argument>--ros-args --remap image_raw:=image_raw</argument>
-                    <argument>--ros-args --remap camera_info:=camera_info</argument>
-                </ros>
-            </plugin>
         </sensor>
+        <!-- <sensor type="camera" name="car_camera">
+            <update_rate>24</update_rate>
+            <visualize>true</visualize>
+            <camera name="head">
+                <horizontal_fov>1.3962634</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>480</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>300</far>
+                </clip>
+            </camera>
+            <plugin filename="CameraTracking" name="Camera Tracking">
+                <ignition-gui>
+                    <property key="resizable" type="bool">false</property>
+                    <property key="width" type="double">5</property>
+                    <property key="height" type="double">5</property>
+                    <property key="state" type="string">floating</property>
+                    <property key="showTitleBar" type="bool">false</property>
+                </ignition-gui>
+            </plugin>
+        </sensor> -->
     </gazebo>
 </robot>

@@ -12,6 +12,7 @@
 
         <include>
             <uri> model://car/car_ball_wheel </uri>
+            <pose> 0 0 0.5 0 0 0 </pose>
         </include>
 
     </world>

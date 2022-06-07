@@ -1,0 +1,5 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sample_car_ball_wheel">
+    <xacro:include filename="model.xacro"/>
+    <xacro:car_ball_wheel name="sample_car_ball_wheel"/>
+</robot>

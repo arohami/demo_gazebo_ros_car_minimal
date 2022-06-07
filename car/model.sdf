@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <sdf version='1.7'>
-    <model name='2wheel_drive_car'>
-        <link name='car_body::link'>
+    <model name='two_wheel_drive_car'>
+        <!-- <model name='vehicle_blue'> -->
+        <link name='car_body__link'>
             <inertial>
                 <pose>0.009406 0 0.00297 0 -0 0</pose>
                 <mass>10.1</mass>
@@ -14,7 +15,7 @@
                     <izz>2.17286</izz>
                 </inertia>
             </inertial>
-            <collision name='car_body::link_fixed_joint_lump__car_body_collision'>
+            <collision name='car_body__link_fixed_joint_lump__car_body_collision'>
                 <pose>0 0 0 0 -0 0</pose>
                 <geometry>
                     <box>
@@ -30,7 +31,7 @@
                     </friction>
                 </surface>
             </collision>
-            <collision name='car_body::link_fixed_joint_lump__car_camera_collision_1'>
+            <collision name='car_body__link_fixed_joint_lump__car_camera_collision_1'>
                 <pose>0.95 0 0.3 0 -0 3.14</pose>
                 <geometry>
                     <box>
@@ -46,7 +47,7 @@
                     </friction>
                 </surface>
             </collision>
-            <visual name='car_body::link_fixed_joint_lump__car_body_visual'>
+            <visual name='car_body__link_fixed_joint_lump__car_body_visual'>
                 <pose>0 0 0 0 -0 0</pose>
                 <geometry>
                     <box>
@@ -60,7 +61,7 @@
                     <ambient> 0.35 0.15 0.15 1 </ambient>
                 </material>
             </visual>
-            <visual name='car_body::link_fixed_joint_lump__car_camera_visual_1'>
+            <visual name='car_body__link_fixed_joint_lump__car_camera_visual_1'>
                 <pose>0.95 0 0.3 0 -0 3.14</pose>
                 <geometry>
                     <box>
@@ -77,6 +78,7 @@
             <sensor name='car_camera' type='camera'>
                 <update_rate>24</update_rate>
                 <visualize>1</visualize>
+                <topic>camera</topic>
                 <camera name='head'>
                     <horizontal_fov>1.39626</horizontal_fov>
                     <image>
@@ -89,18 +91,13 @@
                         <far>300</far>
                     </clip>
                 </camera>
-                <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
-                    <ros>
-                        <argument>--ros-args --remap image_raw:=image_raw</argument>
-                        <argument>--ros-args --remap camera_info:=camera_info</argument>
-                    </ros>
-                </plugin>
                 <pose>0.95 0 0.3 0 -0 0</pose>
             </sensor>
         </link>
-        <joint name='front_left_wheel_2_body' type='revolute'>
-            <pose relative_to='car_body::link'>0.6 0.5 -0.125 -1.5708 0 0</pose>
-            <parent>car_body::link</parent>
+        <joint name='front_left_wheel_to_body' type='revolute'>
+            <!-- <joint name='left_wheel_joint' type="revolute"> -->
+            <pose relative_to='car_body__link'>0.6 0.5 -0.125 -1.5708 0 0</pose>
+            <parent>car_body__link</parent>
             <child>front_left_wheel</child>
             <axis>
                 <xyz>0 0 1</xyz>
@@ -117,7 +114,8 @@
             </axis>
         </joint>
         <link name='front_left_wheel'>
-            <pose relative_to='front_left_wheel_2_body'>0 0 0 0 -0 0</pose>
+            <pose relative_to='front_left_wheel_to_body'>0 0 0 0 -0 0</pose>
+            <!-- <pose relative_to='left_wheel_joint'>0 0 0 0 -0 0</pose> -->
             <inertial>
                 <pose>0 0 0 0 -0 0</pose>
                 <mass>0.5</mass>
@@ -163,9 +161,10 @@
                 </material>
             </visual>
         </link>
-        <joint name='front_right_wheel_2_body' type='revolute'>
-            <pose relative_to='car_body::link'>0.6 -0.5 -0.125 -1.5708 0 0</pose>
-            <parent>car_body::link</parent>
+        <!-- <joint name='right_wheel_joint' type='revolute'> -->
+        <joint name='front_right_wheel_to_body' type='revolute'>
+            <pose relative_to='car_body__link'>0.6 -0.5 -0.125 -1.5708 0 0</pose>
+            <parent>car_body__link</parent>
             <child>front_right_wheel</child>
             <axis>
                 <xyz>0 0 1</xyz>
@@ -182,7 +181,8 @@
             </axis>
         </joint>
         <link name='front_right_wheel'>
-            <pose relative_to='front_right_wheel_2_body'>0 0 0 0 -0 0</pose>
+            <pose relative_to='front_right_wheel_to_body'>0 0 0 0 -0 0</pose>
+            <!-- <pose relative_to='right_wheel_joint'>0 0 0 0 -0 0</pose> -->
             <inertial>
                 <pose>0 0 0 0 -0 0</pose>
                 <mass>0.5</mass>
@@ -228,13 +228,13 @@
                 </material>
             </visual>
         </link>
-        <joint name='rear_left_ball_wheel_2_body' type='ball'>
-            <pose relative_to='car_body::link'>-0.6 0.3 -0.25 0 -0 0</pose>
-            <parent>car_body::link</parent>
+        <joint name='rear_left_ball_wheel_to_body' type='ball'>
+            <pose relative_to='car_body__link'>-0.6 0.3 -0.25 0 -0 0</pose>
+            <parent>car_body__link</parent>
             <child>rear_left_ball_wheel</child>
         </joint>
         <link name='rear_left_ball_wheel'>
-            <pose relative_to='rear_left_ball_wheel_2_body'>0 0 0 0 -0 0</pose>
+            <pose relative_to='rear_left_ball_wheel_to_body'>0 0 0 0 -0 0</pose>
             <inertial>
                 <pose>0 0 0 0 -0 0</pose>
                 <mass>0.5</mass>
@@ -278,13 +278,13 @@
                 </material>
             </visual>
         </link>
-        <joint name='rear_right_ball_wheel_2_body' type='ball'>
-            <pose relative_to='car_body::link'>-0.6 -0.3 -0.25 0 -0 0</pose>
-            <parent>car_body::link</parent>
+        <joint name='rear_right_ball_wheel_to_body' type='ball'>
+            <pose relative_to='car_body__link'>-0.6 -0.3 -0.25 0 -0 0</pose>
+            <parent>car_body__link</parent>
             <child>rear_right_ball_wheel</child>
         </joint>
         <link name='rear_right_ball_wheel'>
-            <pose relative_to='rear_right_ball_wheel_2_body'>0 0 0 0 -0 0</pose>
+            <pose relative_to='rear_right_ball_wheel_to_body'>0 0 0 0 -0 0</pose>
             <inertial>
                 <pose>0 0 0 0 -0 0</pose>
                 <mass>0.5</mass>
@@ -329,17 +329,34 @@
             </visual>
         </link>
         <static>0</static>
-        <plugin name='two_wheeled_robot_diff_drive' filename='libgazebo_ros_diff_drive.so'>
-            <num_wheel_pairs>1</num_wheel_pairs>
-            <left_joint>front_left_wheel_2_body</left_joint>
-            <right_joint>front_right_wheel_2_body</right_joint>
+        <plugin name='ignition::gazebo::systems::DiffDrive' filename='ignition-gazebo-diff-drive-system'>
+            <left_joint>front_left_wheel_to_body</left_joint>
+            <right_joint>front_right_wheel_to_body</right_joint>
             <wheel_separation>1</wheel_separation>
-            <wheel_diameter>0.5</wheel_diameter>
-            <max_wheel_torque>20</max_wheel_torque>
-            <publish_odom>1</publish_odom>
-            <publish_odom_tf>1</publish_odom_tf>
-            <odometry_frame>start_loc_map</odometry_frame>
-            <robot_base_frame>car_body::link</robot_base_frame>
+            <wheel_radius>0.25</wheel_radius>
+            <odom_publish_frequency>1</odom_publish_frequency>
+            <max_linear_acceleration>1</max_linear_acceleration>
+            <min_linear_acceleration>-1</min_linear_acceleration>
+            <max_angular_acceleration>1</max_angular_acceleration>
+            <min_angular_acceleration>-1</min_angular_acceleration>
+            <max_linear_velocity>0.5</max_linear_velocity>
+            <min_linear_velocity>-0.5</min_linear_velocity>
+            <max_angular_velocity>1</max_angular_velocity>
+            <min_angular_velocity>-1</min_angular_velocity>
         </plugin>
+        <!-- <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>left_wheel_joint</left_joint>
+            <right_joint>right_wheel_joint</right_joint>
+            <wheel_separation>1.25</wheel_separation>
+            <wheel_radius>0.3</wheel_radius>
+            <max_linear_acceleration>1</max_linear_acceleration>
+            <min_linear_acceleration>-1</min_linear_acceleration>
+            <max_angular_acceleration>2</max_angular_acceleration>
+            <min_angular_acceleration>-2</min_angular_acceleration>
+            <max_linear_velocity>0.5</max_linear_velocity>
+            <min_linear_velocity>-0.5</min_linear_velocity>
+            <max_angular_velocity>1</max_angular_velocity>
+            <min_angular_velocity>-1</min_angular_velocity>
+        </plugin> -->
     </model>
 </sdf>
