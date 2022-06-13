@@ -80,6 +80,7 @@ there are two methods to run this simulation.
 #### gazebo
 
 open terminal in root project directory, source ros and enter:
+this environment variable is optional so we can run gazebo from any directory.
 ``` bash
  export SDF_PATH=$SDF_PATH:$(pwd)
 ```
@@ -101,26 +102,31 @@ don't forget to play simulation (play button at the left bottom of the ign gazeb
 ### ROS BRIDGE
 to convert ign gazebo topics to ros2 topics, we use ros_ign_gazebo_bridge package from ros2:
 
+open a terminal in root directory of the project and enter:
 ```bash
-ros2 run ros_ign_bridge parameter_bridge /model/two_wheel_drive_car/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist /camera@sensor_msgs/msg/Image@ignition.msgs.Image /model/two_wheel_drive_car/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry /camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo /world/default/model/two_wheel_drive_car/joint_state@sensor_msgs/msg/JointState@ignition.msgs.Model /model/two_wheel_drive_car/tf@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V 
+ros2 run ros_ign_bridge parameter_bridge /cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist /camera@sensor_msgs/msg/Image@ignition.msgs.Image /odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry /camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo /joint_states@sensor_msgs/msg/JointState@ignition.msgs.Model /tf@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V
 ```
 
 ### ROS Visualization
-to visualize data of the robot we use rviz assuming position of the robot is always known. but other parts position should be calculated (tf)
-position of the robot is published in ros using "two_wheeled_robot_diff_drive" plugin. for tf of static parts we use "robot_state_publisher" and tf of dynamic parts are published using "joint_state_publisher". however since rviz, robot_state_publisher and joint_state_publisher are already packed nicely and launched in urdf_tutorial_example, we use this package.
+to visualize data of the robot we use rviz assuming position of the robot is always known.however robot description is needed (topic)
+for proper model visualization in rviz. 
+position of the robot is published in ros using "two_wheeled_robot_diff_drive" ign_gazebo plugin (sdf), for static parts (tf) we use "robot_state_publisher"(ros2 package) and tf of dynamic parts are published using "joint_state_publisher" ign_gazebo_plugin (sdf).
 
-###################### add jointstate and robot state publisher and rviz setting ###################
-open another terminal:
+open a terminal in root directory of the project and enter:
 
-``` bash
-ros2 launch urdf_tutorial display.launch.py rvizconfig:=rviz2_config.rviz model:=car/model.urdf
+```bash
+ros2 run robot_state_publisher robot_state_publisher car/model.urdf
 ```
 
+open a terminal in root directory of the project and enter:
+``` bash
+ros2 run rviz2 rviz2 -d rviz2_config.rviz
+```
 
 ### Drive
 to drive the car, we simply use teleop_twist_keyboard package:
 
-open another terminal:
+open a terminal in root directory of the project and enter:
 ``` bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```

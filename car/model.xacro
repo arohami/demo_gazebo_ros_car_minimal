@@ -2,11 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2wheel_drive_car">
 
     <!-- car body -->
-    <link name="car_body::link" />
+    <link name="car_body__link" />
 
     <xacro:include filename="car_body/model.xacro"/>
-    <joint name="carbodylink_2_carbody" type="fixed">
-        <parent link="car_body::link"/>
+    <joint name="carbodylink_to_carbody" type="fixed">
+        <parent link="car_body__link"/>
         <child link="car_body"/>
     </joint>
 
@@ -14,7 +14,7 @@
     <xacro:include filename="car_ball_wheel/model.xacro"/>
 
     <xacro:car_ball_wheel name="rear_left_ball_wheel"/>
-    <joint name="rear_left_ball_wheel_2_body" type="continuous">
+    <joint name="rear_left_ball_wheel_to_body" type="continuous">
         <origin xyz="${-(car_body_length/2) + (car_body_length/5)} ${(car_body_width/2) - (car_body_width/5)} ${-(car_body_height/2)}" rpy="0.0 0.0 0.0"/>
         <parent link="car_body"/>
         <child link="rear_left_ball_wheel"/>
@@ -23,7 +23,7 @@
     </joint>
 
     <xacro:car_ball_wheel name="rear_right_ball_wheel"/>
-    <joint name="rear_right_ball_wheel_2_body" type="continuous">
+    <joint name="rear_right_ball_wheel_to_body" type="continuous">
         <origin xyz="${-(car_body_length/2) + (car_body_length/5)} ${-(car_body_width/2) + (car_body_width/5)} ${-(car_body_height/2)}" rpy="0.0 0.0 0.0"/>
         <parent link="car_body"/>
         <child link="rear_right_ball_wheel"/>
@@ -43,7 +43,7 @@
     <xacro:include filename="car_wheel/model.xacro"/>
 
     <xacro:car_wheel name="front_left_wheel"/>
-    <joint name="front_left_wheel_2_body" type="continuous">
+    <joint name="front_left_wheel_to_body" type="continuous">
         <origin xyz="${+(car_body_length/2) - (car_body_length/5)} ${(car_body_width/2)} ${-(car_body_height/2) + (car_wheel_radius - car_ball_wheel_radius)}" rpy="${-pi/2} 0 0"/>
         <parent link="car_body"/>
         <child link="front_left_wheel"/>
@@ -52,7 +52,7 @@
     </joint>
 
     <xacro:car_wheel name="front_right_wheel"/>
-    <joint name="front_right_wheel_2_body" type="continuous">
+    <joint name="front_right_wheel_to_body" type="continuous">
         <origin xyz="${+(car_body_length/2) - (car_body_length/5)} ${-(car_body_width/2)} ${-(car_body_height/2) + (car_wheel_radius - car_ball_wheel_radius)}" rpy="${-pi/2} 0 0"/>
         <parent link="car_body"/>
         <child link="front_right_wheel"/>
@@ -61,7 +61,7 @@
     </joint>
 
     <xacro:include filename="car_camera/model.xacro"/>
-    <joint name="camera_2_body" type="fixed">
+    <joint name="camera_to_body" type="fixed">
         <origin xyz="${+(car_body_length/2) - (camera_length/2)} 0 ${car_body_height/2 + camera_length/2}" rpy="0 0 0"/>
         <parent link="car_body"/>
         <child link="car_camera"/>
@@ -69,8 +69,12 @@
 
     <gazebo>
         <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
-            <left_joint>front_left_wheel_2_body</left_joint>
-            <right_joint>front_right_wheel_2_body</right_joint>
+            <left_joint>front_left_wheel_to_body</left_joint>
+            <right_joint>front_right_wheel_to_body</right_joint>
+            <odom_topic>odometry</odom_topic>
+            <tf_topic>tf</tf_topic>
+            <frame_id>odom</frame_id>
+            <child_frame>car_body__link</child_frame>
             <wheel_separation>1</wheel_separation>
             <wheel_radius>${car_wheel_radius}</wheel_radius>
             <odom_publish_frequency>1</odom_publish_frequency>
@@ -83,12 +87,8 @@
             <max_angular_velocity>1</max_angular_velocity>
             <min_angular_velocity>-1</min_angular_velocity>
         </plugin>
-        <!-- <plugin filename="libignition-gazebo6-joint-state-publisher-system.so.6.9.0" name="ignition::gazebo::systems::JointStatePublisher ">
-            <joint_name>front_right_wheel</joint_name>
-            <joint_name>front_left_wheel</joint_name>
-            <joint_name>rear_right_ball_wheel</joint_name>
-            <joint_name>rear_left_ball_wheel</joint_name>
-        </plugin> -->
+        <plugin filename="libignition-gazebo-joint-state-publisher-system.so" name="ignition::gazebo::systems::JointStatePublisher ">
+        </plugin>
     </gazebo>
 
 </robot>
