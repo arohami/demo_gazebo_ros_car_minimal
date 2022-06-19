@@ -34,8 +34,10 @@ ros2 xacro xacro model.xacro > model.urdf
 to test urdf files seperately: 
 
 ``` bash
-ros2 launch urdf_tutorial display.launch.py
+ros2 launch urdf_tutorial display.launch.py model:=model.urdf
 ```
+
+and set fixed frame in rviz to the name of the robot in .urdf file: rviz > global options (right panel) > fixed frame
 
 **note:** we can also write model description in sdf format and then convert it to urdf using pysdf: `ros2 run pysdf sdf2urdf model.sdf model.urdf`. but again, some tags like "joint" that are different in urdf and sdf should be modified manually after the conversion.
 
