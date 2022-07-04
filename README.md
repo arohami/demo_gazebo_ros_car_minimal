@@ -66,6 +66,15 @@ comment this line: `<sdf version="1.7">model.sdf</sdf>`
 
 **note:** common sdf models (sun & ground plane) are placed in root directory of the project and are used by world/test_world sfd files.
 
+### docker
+simulation and all executors can run within docker too. that's why there is another file in launch folder which is a bash file. this file configures docker container (sets arguments like volumes, etc.) and runs the docker container.
+take notice that .bashrc and entrypoint.bash are already mounted into docker container so we can manipulate docker run and docker exec behaviour. 
+
+also ros_ws is a directory which is mounted into the docker to prevent build and install directory loss after docker container exits. all the whole repo is mounted inside ros_ws/src. so basically there are two ways to mount any extra resources to the container without changing the docker_run.bash volumes:
+1. from docker_volumes/ros_ws directory
+2. from root directory of this package
+
+
 ## How to use
 ----
 there are two methods to run this simulation. 
@@ -101,7 +110,7 @@ ros2 launch ros_ign_gazebo ign_gazebo.launch.py ign_args:="car/world.sdf --gui-c
 don't forget to play simulation (play button at the left bottom of the ign gazebo screen)
 
 
-### ROS BRIDGE
+#### ROS BRIDGE
 to convert ign gazebo topics to ros2 topics, we use ros_ign_gazebo_bridge package from ros2:
 
 open a terminal in root directory of the project and enter:
@@ -109,7 +118,7 @@ open a terminal in root directory of the project and enter:
 ros2 run ros_ign_bridge parameter_bridge /cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist /camera@sensor_msgs/msg/Image@ignition.msgs.Image /odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry /camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo /joint_states@sensor_msgs/msg/JointState@ignition.msgs.Model /tf@tf2_msgs/msg/TFMessage@ignition.msgs.Pose_V
 ```
 
-### ROS Visualization
+#### ROS Visualization
 to visualize data of the robot we use rviz assuming position of the robot is always known.however robot description is needed (topic)
 for proper model visualization in rviz. 
 position of the robot is published in ros using "two_wheeled_robot_diff_drive" ign_gazebo plugin (sdf), for static parts (tf) we use "robot_state_publisher"(ros2 package) and tf of dynamic parts are published using "joint_state_publisher" ign_gazebo_plugin (sdf).
@@ -125,10 +134,37 @@ open a terminal in root directory of the project and enter:
 ros2 run rviz2 rviz2 -d rviz2_config.rviz
 ```
 
-### Drive
+#### Drive
 to drive the car, we simply use teleop_twist_keyboard package:
 
 open a terminal in root directory of the project and enter:
 ``` bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
+
+### launch together (using launch file)
+another way to run the demo project is to use ros launch file to configure each package and executor and launch them all together as one app. 
+
+#### launch
+open a terminal, source ros and the project, enter:
+```bash
+ros2 launch demo_gazebo_ros_car_minimal demo_gazebo_ros_car_minimal.launch.py
+```
+this should open ign gazebo with a red vehicle, rviz with the same model at the center of the world and a terminal to read keystrokes and make the car drivable.
+**note:** don't forget to actually start the simulator as it's paused by default. 
+
+## run in docker
+it's also possible and a good practice to try to run everything in an isolated environment like docker. 
+dockerfile is already availble in other repos. to use docker you need to either build the image from dockerfile or download it from dockerhub:
+```
+docker pull arahami/ros2humble_igngazebo
+```
+
+### how to run
+to run the proper container from the docker image, it's best to have a docker runner/launcher file. 
+here, docker_run.bash is that file.
+so to run a docker container from ros2humble_igngazebo  we only need to:
+```bash
+bash docker_run.bash
+```
+this bash script specifies the files that needs to be mounted to docker as well as configuring other options like sharing display with the host. 

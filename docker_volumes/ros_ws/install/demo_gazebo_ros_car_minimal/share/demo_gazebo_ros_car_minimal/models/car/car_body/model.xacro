@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="car_body">
+    <xacro:property name="car_body_mass" value="10"/>
+    <xacro:property name="car_body_width" value="1"/>
+    <xacro:property name="car_body_height" value="0.5"/>
+    <xacro:property name="car_body_length" value="2"/>
+    <xacro:property name="car_body_geometry">
+        <geometry>
+            <box size="${car_body_length} ${car_body_width} ${car_body_height}"/>
+        </geometry>
+    </xacro:property>
+    <material name="car_body_color">
+        <color rgba="0.97 0.25 0.25 1"/>
+    </material>
+    <gazebo reference="car_body">
+        <material>
+            <diffuse> 0.97 0.25 0.25 1 </diffuse>
+            <specular> 0.2 0.2 0.2 1  </specular>
+            <emissive> 0 0 0 1 </emissive>
+            <ambient> 0.35 0.15 0.15 1 </ambient>
+        </material>
+    </gazebo>
+    <link name="car_body">
+        <inertial>
+            <mass value="${car_body_mass}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="${(5/12) * (car_body_width * car_body_width + car_body_height* car_body_height)}" ixy="0" ixz="0" iyy="${(5/12) * (car_body_length * car_body_length + car_body_height * car_body_height)}" iyz="0" izz="${(5/12) * (car_body_width * car_body_width + car_body_length * car_body_length)}" />
+        </inertial>
+        <visual>
+            <xacro:insert_block name="car_body_geometry"/>
+            <material name="car_body_color"/>
+        </visual>
+        <collision>
+            <xacro:insert_block name="car_body_geometry"/>
+        </collision>
+    </link>
+</robot>

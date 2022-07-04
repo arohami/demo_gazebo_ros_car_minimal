@@ -1,0 +1,6 @@
+source;share/demo_gazebo_ros_car_minimal/hook/pythonpath.ps1
+source;share/demo_gazebo_ros_car_minimal/hook/pythonpath.dsv
+source;share/demo_gazebo_ros_car_minimal/hook/pythonpath.sh
+source;share/demo_gazebo_ros_car_minimal/hook/ament_prefix_path.ps1
+source;share/demo_gazebo_ros_car_minimal/hook/ament_prefix_path.dsv
+source;share/demo_gazebo_ros_car_minimal/hook/ament_prefix_path.sh

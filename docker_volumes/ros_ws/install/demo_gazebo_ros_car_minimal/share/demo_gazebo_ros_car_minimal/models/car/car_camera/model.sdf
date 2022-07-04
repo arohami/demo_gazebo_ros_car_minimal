@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<sdf version='1.7'>
+    <model name='car_camera'>
+        <link name='car_camera'>
+            <inertial>
+                <pose>0 0 0 0 -0 0</pose>
+                <mass>0.1</mass>
+                <inertia>
+                    <ixx>0.000166667</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.000166667</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.000166667</izz>
+                </inertia>
+            </inertial>
+            <collision name='car_camera_collision'>
+                <pose>0 0 0 0 -0 3.14</pose>
+                <geometry>
+                    <box>
+                        <size>0.1 0.1 0.1</size>
+                    </box>
+                </geometry>
+                <surface>
+                    <contact>
+                        <ode/>
+                    </contact>
+                    <friction>
+                        <ode/>
+                    </friction>
+                </surface>
+            </collision>
+            <visual name='car_camera_visual'>
+                <pose>0 0 0 0 -0 3.14</pose>
+                <geometry>
+                    <box>
+                        <size>0.1 0.1 0.1</size>
+                    </box>
+                </geometry>
+                <material>
+                    <diffuse> 0.52 0.8 0.98 1 </diffuse>
+                    <specular> 0.2 0.2 0.2 0  </specular>
+                    <emissive> 0 0 0 1 </emissive>
+                    <ambient> 0.114 0.16 0.196 1 </ambient>
+                </material>
+            </visual>
+            <sensor name='car_camera' type='camera'>
+                <update_rate>24</update_rate>
+                <visualize>1</visualize>
+                <topic>camera</topic>
+                <camera name='head'>
+                    <horizontal_fov>1.39626</horizontal_fov>
+                    <image>
+                        <width>640</width>
+                        <height>480</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                </camera>
+            </sensor>
+        </link>
+    </model>
+</sdf>
