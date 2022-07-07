@@ -8,7 +8,7 @@ DOCKER_USER_HOME=/home/sim
 
 docker run --rm -it  \
     --privileged \
-    --net=host \
+    --network=host \
     --user sim \
     --name demo_gazebo_ros_car_minimal \
     -e DISPLAY=$DISPLAY  \

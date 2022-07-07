@@ -20,8 +20,8 @@ def generate_launch_description():
     package_path = FindPackageShare(package_name)
     models_path = PathJoinSubstitution([package_path, "models"])
     urdf_model_path = PathJoinSubstitution([models_path, "car/model.urdf"])
-    rviz_config_path = PathJoinSubstitution([package_path, "rviz2_config.rviz"])
-    ign_gazebo_config_path = PathJoinSubstitution([package_path, "ign_gazebo_gui.config"])
+    rviz_config_path = PathJoinSubstitution([package_path, "configs", "rviz2_config.rviz"])
+    ign_gazebo_config_path = PathJoinSubstitution([package_path, "configs", "ign_gazebo_gui.config"])
     world_sdf_path = PathJoinSubstitution([models_path, 'world.sdf'])
 
     # ign gazebo

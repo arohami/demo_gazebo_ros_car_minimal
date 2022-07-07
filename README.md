@@ -93,18 +93,21 @@ there are two methods to run this simulation.
 open terminal in root project directory, source ros and enter:
 this environment variable is optional so we can run gazebo from any directory.
 ``` bash
- export SDF_PATH=$SDF_PATH:$(pwd)
+export SDF_PATH=$SDF_PATH:$(pwd)/models
+export PKG_PATH=$(pwd)/
 ```
-**note**: since files of different parts are relatively included in the main model file, it's important to set this environment variable correctly (so for example $SDF_PATH/car/car_body should exist)
+**note**: since files of different parts are relatively included in the main model file, it's important to set this environment variable correctly (so for example $SDF_PATH/car/car_body should exist).
+
+**note:** if environment variables are not set, all commands must be executed from root directory of the package
 
 after setting environment variable, you can launch world.sdf in ign gazebo directly: 
 ``` bash
- ign gazebo car/world.sdf --gui-config ign_gazebo_gui.config
+ ign gazebo "$PKG_PATH"models/world.sdf --gui-config "$PKG_PATH"configs/ign_gazebo_gui.config
  ```
  
 or you can launch ign gazebo using ros command:
 ``` bash
-ros2 launch ros_ign_gazebo ign_gazebo.launch.py ign_args:="car/world.sdf --gui-config ign_gazebo_gui.config"
+ros2 launch ros_ign_gazebo ign_gazebo.launch.py ign_args:="'$PKG_PATH'models/world.sdf --gui-config '$PKG_PATH'configs/ign_gazebo_gui.config"
 ```
 
 don't forget to play simulation (play button at the left bottom of the ign gazebo screen)
@@ -131,7 +134,7 @@ ros2 run robot_state_publisher robot_state_publisher car/model.urdf
 
 open a terminal in root directory of the project and enter:
 ``` bash
-ros2 run rviz2 rviz2 -d rviz2_config.rviz
+ros2 run rviz2 rviz2 -d "$PKG_PATH"configs/rviz2_config.rviz
 ```
 
 #### Drive
