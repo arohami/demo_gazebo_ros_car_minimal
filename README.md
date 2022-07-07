@@ -91,7 +91,6 @@ there are two methods to run this simulation.
 #### gazebo
 
 open terminal in root project directory, source ros and enter:
-this environment variable is optional so we can run gazebo from any directory.
 ``` bash
 export SDF_PATH=$SDF_PATH:$(pwd)/models
 export PKG_PATH=$(pwd)/

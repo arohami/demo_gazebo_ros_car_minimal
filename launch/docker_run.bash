@@ -24,4 +24,4 @@ docker run --rm -it  \
     -v $PKG_PATH/docker_volumes/ros_ws:$DOCKER_USER_HOME/ros_ws \
     -v $PKG_PATH:$DOCKER_USER_HOME/ros_ws/src/demo_gazebo_ros_car_minimal \
     --security-opt seccomp=unconfined \
-    arahami/ros2humble_igngazebo 
+    arahami/ros2humble_igngazebo
