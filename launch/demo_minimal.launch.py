@@ -83,10 +83,12 @@ def generate_launch_description():
         shell=True,
         output="screen",
         prefix="gnome-terminal --"
+        # "--" to terminate the options and put the command line to execute after it.
     )
 
     teleop_node = Node(package="teleop_twist_keyboard", executable="teleop_twist_keyboard",
-                       emulate_tty=True, prefix="gnome-terminal --")
+                       emulate_tty=True, 
+                       prefix="gnome-terminal --")
 
     return LaunchDescription(
         [

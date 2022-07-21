@@ -20,23 +20,8 @@ def generate_launch_description():
     package_path = FindPackageShare(package_name)
     models_path = PathJoinSubstitution([package_path, "models"])
     urdf_model_path = PathJoinSubstitution([models_path, "car/model.urdf"])
-    rviz_config_path = PathJoinSubstitution([package_path, "rviz2_config.rviz"])
-    ign_gazebo_config_path = PathJoinSubstitution([package_path, "ign_gazebo_gui.config"])
-    world_sdf_path = PathJoinSubstitution([models_path, 'world.sdf'])
-
-    # ign gazebo
-    ign_gazebo_cmd = ExecuteProcess(
-        cmd=[["ign gazebo ", world_sdf_path, " --gui-config ", ign_gazebo_config_path]],
-        shell=True,
-        output="screen",
-    )
-
-    ros_ign_gazebo_package_launch_path = os.path.join(
-        get_package_share_directory('ros_ign_gazebo'), 'launch/ign_gazebo.launch.py')
-    ros_ign_gazebo_launch_arguments = {"ign_args": [world_sdf_path, " --gui-config ", ign_gazebo_config_path]}.items()
-    launch_description_source = PythonLaunchDescriptionSource(ros_ign_gazebo_package_launch_path)
-    ros_ign_gazebo_launch_include = IncludeLaunchDescription(launch_description_source,
-                                                             launch_arguments=ros_ign_gazebo_launch_arguments)
+    rviz_config_path = PathJoinSubstitution([package_path, "configs", "rviz2_config.rviz"])
+    ign_gazebo_config_path = PathJoinSubstitution([package_path, "configs", "ign_gazebo_gui.config"])
 
     # ros ign bridge
     ros_ign_bridge_topics = [
@@ -83,17 +68,15 @@ def generate_launch_description():
         shell=True,
         output="screen",
         prefix="gnome-terminal --"
+        # "--" to terminate the options and put the command line to execute after it.
     )
 
     teleop_node = Node(package="teleop_twist_keyboard", executable="teleop_twist_keyboard",
-                       emulate_tty=True, prefix="gnome-terminal --")
+                       emulate_tty=True, 
+                       prefix="gnome-terminal --")
 
     return LaunchDescription(
         [
-            SetEnvironmentVariable(name="SDF_PATH", value=models_path),
-            # # ign_gazebo_cmd,                     # this
-            ros_ign_gazebo_launch_include,       # or this
-
             # # ros_ign_gazebo_bridge_cmd,    # this
             ros_ign_bridge_node,           # or this
 
